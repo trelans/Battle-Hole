@@ -9,6 +9,8 @@ TagManager:
   - FinishLine
   - Building
   - EnemyPooler
+  - Ammo
+  - ammo
   layers:
   - Default
   - TransparentFX
