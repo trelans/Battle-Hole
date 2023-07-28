@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Navigator : MonoBehaviour
@@ -15,6 +16,13 @@ public class Navigator : MonoBehaviour
 
     public ForceMode forceMode; // force type
     public LayerMask layerMask; // determines which layer should be affected by gravity
+
+
+    private void Awake()
+    {
+     
+    }
+
     void Start()
     {
         
@@ -83,12 +91,26 @@ public class Navigator : MonoBehaviour
             Vector3 forceDirection = new Vector3(gravitySource.x,upOrDown,gravitySource.z) - objs[i].transform.position;
             
             rbs.AddForceAtPosition(power * forceDirection.normalized,gravitySource);
+
+            if (objs[i].tag == "Enemy")
+            {
+                objs[i].GetComponent<Outline>().enabled = false;
+            }
+
+      
         }
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position,forceRange);
+    }
+
+    IEnumerator KillEnemy(Collider collider)
+    {
+        yield return new WaitForSeconds(0.3f);
+        collider.gameObject.SetActive(false);
+        
     }
 }
 

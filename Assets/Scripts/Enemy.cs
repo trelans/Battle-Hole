@@ -41,6 +41,10 @@ public class Enemy : MonoBehaviour
     private bool isIncreasedProgress;
     private Rigidbody _rigidbody;
 
+    private Vector3 targetPosition;
+    private bool isAmmo;
+    private bool willDie;
+    
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -64,6 +68,7 @@ public class Enemy : MonoBehaviour
         isPositionCheckOn = false;
         isHandled = false;
         pushForceMagnitude = 250;
+        isAmmo = false;
         if (stationary)
             SetShootable();
     }
@@ -79,44 +84,42 @@ public class Enemy : MonoBehaviour
    
         }
 
-/*
-        if (enemyGeneratedWithGenerator && isTimeStarted && !isHut)
-        {
-            float currentDistance 
-        
-            Debug.Log("Distance " + currentDistance);
-                if (currentDistance <= minDistanceToSlow)
-                {
-                   _enemyGeneratorController.SlowPlayer();
-                }
 
-                if (currentDistance <= 0 )
-                {
-                    if (!isHandled)
-                    { _enemyGeneratorController.IncrementHandledEnemies();
-                        isHandled = true;
-                    } 
-                 
-                }
-        
+        if (transform.position.y < -10)
+        {
+            DieEnemy(false);
         }
-      */
 
       
     }
 
-
+    public void UseAmmo(Vector3 pos)
+    {
+        _rigidbody.isKinematic = true;
+        targetPosition = pos;
+        isAmmo = true;
+        _animator.enabled = false;
+        
+    }
     public void SetIsTimeStarted(bool b)
     {
         isTimeStarted = b;
     }
 
+    public void SetWillDie(bool b)
+    {
+        willDie = b;
+    }
+    public bool GetWillDie()
+    {
+        return willDie;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("sdf");
+
         if (other.gameObject.tag == "Ammo" && isShootable)
         {
-            Debug.Log("ssdfdf");
+        
             DieEnemy(false);
         
             other.gameObject.SetActive(false);
@@ -138,7 +141,7 @@ public class Enemy : MonoBehaviour
             _enemyGeneratorController.IncrementHandledEnemies();
         }
         
-     
+       
        
 
         gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -211,6 +214,7 @@ public class Enemy : MonoBehaviour
     public void SetIsMoving(bool b)
     {
         isMoving = b;
+
     }
 
     public void SetEnemyGenerator(EnemyGeneratorController e)
@@ -230,6 +234,20 @@ public class Enemy : MonoBehaviour
     
     private void OnCollisionEnter(Collision other) {
     
+        if (other.gameObject.tag == "Ammo" && isShootable)
+        {
+        
+            DieEnemy(true);
+        
+            other.gameObject.SetActive(false);
+        }
+        if (other.gameObject.tag == "EnemyAmmo" && isShootable)
+        {
+        
+            DieEnemy(true);
+        
+            other.gameObject.SetActive(false);
+        }
     }
     
 

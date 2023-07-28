@@ -33,6 +33,7 @@ public class EnemyGeneratorController : MonoBehaviour
    [SerializeField] private bool isHut;
 
    private GameObject enemyPooler;
+   
     private void Awake()
     {
         enemyPooler = GameObject.FindGameObjectWithTag("EnemyPooler");
@@ -131,6 +132,21 @@ public class EnemyGeneratorController : MonoBehaviour
    
     }
 
+    public GameObject GetEnemyAmmoTarget()
+    {
+        GameObject r = activeObjects[activeObjects.Count-1];
+        activeObjects.Remove(activeObjects[activeObjects.Count-1]);
+        return r;
+    }
+    public void RemoveActive(GameObject g)
+    {
+        activeObjects.Remove(g);
+    }
+
+    public int GetEnemyCount()
+    {
+        return activeObjects.Count;
+    }
     private void ActivateTime()
     {
         foreach (var enemy in activeObjectsEnemies)

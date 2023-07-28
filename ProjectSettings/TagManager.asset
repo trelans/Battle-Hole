@@ -11,6 +11,8 @@ TagManager:
   - EnemyPooler
   - Ammo
   - ammo
+  - Enemy
+  - EnemyAmmo
   layers:
   - Default
   - TransparentFX
