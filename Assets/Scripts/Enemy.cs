@@ -179,25 +179,21 @@ public class Enemy : MonoBehaviour
     {
         if (!isFly)
         {
-            int random = UnityEngine.Random.Range(0, 5);
+            int random = UnityEngine.Random.Range(0, 4);
             if (random == 0)
-            {
-                _animator.SetTrigger("Death");
-            } 
-            else if (random == 1)
             {
                 _animator.SetTrigger("Death2");
             }
-            else if (random == 2)
+            else if (random == 1)
             {
                 _animator.SetTrigger("Death3");
             }
-            else if (random == 3)
+            else if (random == 2)
             {
                 _animator.SetTrigger("Death4");
             
             }
-            else if (random == 4)
+            else if (random == 3)
             {
                 _animator.SetTrigger("Death5");
             }
