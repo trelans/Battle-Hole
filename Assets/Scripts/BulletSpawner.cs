@@ -35,6 +35,9 @@ public class BulletSpawner : MonoBehaviour
     [SerializeField]
     private float holeRadius;
 
+    [SerializeField]
+    private float lineOffset;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,7 +98,7 @@ public class BulletSpawner : MonoBehaviour
         }
         else
         {
-            randomZ = UnityEngine.Random.Range(originToHole.y + holeRadius, areaRadius);
+            randomZ = UnityEngine.Random.Range(originToHole.y + holeRadius, areaRadius - lineOffset);
         }
 
         randomPos = new Vector3(origin.x + randomX, yPos+yOffset, origin.y + randomZ);
