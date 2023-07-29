@@ -93,21 +93,25 @@ public class EnemyGeneratorController : MonoBehaviour
 
     void Update() 
     {
+        float randomFloat1 = 0;
+        float randomFloat2 = 0; 
         if (isTimeStarted)
         {
             if (currentOrder < verticalAmount + 1)
             {
                 if (leftSecondsAgo > leavingPeriod)
                 {
-
+                    
                     currentOrder = currentOrder + 1;
                     leftSecondsAgo = 0;
+                    randomFloat1 = UnityEngine.Random.Range(50f, 400f);
+                    randomFloat2 = UnityEngine.Random.Range(50f, 400f);
                     
                 }
 
 
                 leftSecondsAgo = leftSecondsAgo + Time.deltaTime;
-                MoveEnemiesToSides(currentOrder);
+                MoveEnemiesToSides(currentOrder, randomFloat1, randomFloat2);
                 ActivateTime();
 
                 
@@ -154,7 +158,7 @@ public class EnemyGeneratorController : MonoBehaviour
             enemy.SetIsTimeStarted(true);
         }
     }
-    private void MoveEnemiesToSides(int order)
+    private void MoveEnemiesToSides(int order, float random1, float random2)
     {
      
         for (int i = 0; i < horizontalAmount / 2; i++)
@@ -162,7 +166,7 @@ public class EnemyGeneratorController : MonoBehaviour
             int curIndex = order + i * verticalAmount - 1;
             if (curIndex < activeObjects.Count && curIndex > 0)
             {
-                activeObjects[curIndex].transform.position += new Vector3(-leavingSpeed * i * Time.deltaTime, 0, 0);
+                activeObjects[curIndex].transform.position += new Vector3(random1 * Time.deltaTime, 0, 0); 
                 activeObjects[curIndex].transform.GetChild(0).GetComponent<Enemy>().SetShootable();
             }
         }
@@ -172,7 +176,7 @@ public class EnemyGeneratorController : MonoBehaviour
             int curIndex = order + i * verticalAmount - 1;
             if (curIndex < activeObjects.Count && curIndex > 0)
             {
-                activeObjects[curIndex].transform.position += new Vector3(leavingSpeed * (i - horizontalAmount / 2) * Time.deltaTime, 0, 0);
+                activeObjects[curIndex].transform.position += new Vector3(-random2 * Time.deltaTime, 0, 0); 
                 activeObjects[curIndex].transform.GetChild(0).GetComponent<Enemy>().SetShootable();
             }
         }
