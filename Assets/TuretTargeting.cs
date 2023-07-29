@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TuretTargeting : MonoBehaviour
@@ -15,6 +16,13 @@ public class TuretTargeting : MonoBehaviour
     private LineRenderer rangeIndicator; // LineRenderer to draw the circle range
     [SerializeField] private ProgressBar progressBar;
     private bool isFireStarted;
+    private destroyCubes cubes;
+
+    private void Awake()
+    {
+        cubes = FindObjectOfType<destroyCubes>();
+    }
+
     void Start()
     {
         // Create and set up the LineRenderer
@@ -90,9 +98,10 @@ public class TuretTargeting : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("asdasds");
-            if (!isFireStarted)
+            if (!isFireStarted && cubes.GetCurrentAmmo() > 0)
             {
                 progressBar.ResetTime();
+                isFireStarted = true;
             }
         
             

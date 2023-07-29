@@ -93,7 +93,7 @@ public class Navigator : MonoBehaviour
             Rigidbody rbs = objs[i].GetComponent<Rigidbody>();
             
             Vector3 forceDirection = new Vector3(gravitySource.x,upOrDown,gravitySource.z) - objs[i].transform.position;
-            
+       
             rbs.AddForceAtPosition(power * forceDirection.normalized,gravitySource);
 
             if (objs[i].tag == "Enemy")

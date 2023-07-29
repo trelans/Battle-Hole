@@ -14,6 +14,7 @@ public class destroyCubes : MonoBehaviour
   private bool isFull;
   private holeManager hole;
   private Navigator navigator;
+  [SerializeField] private int multipleAmmo;
     private void Awake()
     {
         hole = FindObjectOfType<holeManager>();
@@ -46,7 +47,11 @@ public class destroyCubes : MonoBehaviour
             other.gameObject.SetActive(false);
             other.gameObject.transform.position = ammos.transform.position;
             other.gameObject.transform.SetParent(ammos.transform);
-          
+            for (int i = 0; i < multipleAmmo; i++)
+            {
+                Instantiate(other.gameObject, other.gameObject.transform).transform.SetParent(ammos.transform);
+            }
+            
             UpdateAmmoCount();
 
         }
@@ -57,7 +62,7 @@ public class destroyCubes : MonoBehaviour
     private void UpdateAmmoCount()
     {
        
-        currentAmmo++;
+        currentAmmo = multipleAmmo+ 1  + currentAmmo ;
         tmp.SetText(currentAmmo + "/" + ammoMax);
         if (currentAmmo == ammoMax)
         {
@@ -78,5 +83,10 @@ public class destroyCubes : MonoBehaviour
         navigator.SetIsFull(false);
       
        
+    }
+
+    public int GetCurrentAmmo()
+    {
+        return currentAmmo;
     }
 }

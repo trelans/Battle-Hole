@@ -44,6 +44,7 @@ public class Enemy : MonoBehaviour
     private Vector3 targetPosition;
     private bool isAmmo;
     private bool willDie;
+    private HealthBar healthBar;
     
     private void Awake()
     {
@@ -52,7 +53,8 @@ public class Enemy : MonoBehaviour
         ink = transform.parent.GetChild(1).GetComponent<Ink>();
         
         _rigidbody = GetComponent<Rigidbody>();
-        
+        healthBar = FindObjectOfType<HealthBar>();
+
     }
 
     private void Start()
@@ -134,8 +136,9 @@ public class Enemy : MonoBehaviour
 
         if (other.gameObject.tag == "Line" && isShootable)
         {
-            PushEnemy();
-            DieEnemy(true);
+            
+            DieEnemy(false);
+            healthBar.DecreaseHealth();
         }
 
 
@@ -152,7 +155,7 @@ public class Enemy : MonoBehaviour
        
        
 
-        gameObject.GetComponent<BoxCollider>().enabled = false;
+      
         isMoving = false;
         if (!isDead)
         {
