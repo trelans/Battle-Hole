@@ -20,7 +20,7 @@ public class TuretTargeting : MonoBehaviour
         // Create and set up the LineRenderer
         rangeIndicator = gameObject.AddComponent<LineRenderer>();
         rangeIndicator.material = new Material(Shader.Find("Standard"));
-        rangeIndicator.material.color = Color.blue;
+        rangeIndicator.material.color = Color.gray;
         rangeIndicator.loop = true;
         rangeIndicator.startWidth = 0.1f;
         rangeIndicator.endWidth = 0.1f;
@@ -122,12 +122,14 @@ public class TuretTargeting : MonoBehaviour
         if (rangeIndicator == null)
             return;
 
-        // Draw the circle range on the XZ plane (center's Y position)
-        int segments = 360;
+        // Draw the half circle range on the XZ plane (center's Y position)
+        int segments = 180; // Change this to 180 for half circle
         float[] angles = new float[segments + 1];
+        float rotationAngle = -Mathf.PI / 2f; // -90 degrees in radians (opposite direction)
         for (int i = 0; i <= segments; i++)
         {
-            float angle = (Mathf.PI * 2f / segments) * i;
+            // Divide by 2 to get half circle, and add the rotation angle to rotate counterclockwise
+            float angle = (Mathf.PI * 1f / segments) * i + rotationAngle; 
             angles[i] = angle;
         }
 
@@ -142,4 +144,7 @@ public class TuretTargeting : MonoBehaviour
         rangeIndicator.positionCount = segments + 1;
         rangeIndicator.SetPositions(points);
     }
+
+
+
 }
