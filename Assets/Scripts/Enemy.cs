@@ -131,6 +131,14 @@ public class Enemy : MonoBehaviour
             PushEnemy();
             DieEnemy(true);
         }
+
+        if (other.gameObject.tag == "Line" && isShootable)
+        {
+            PushEnemy();
+            DieEnemy(true);
+        }
+
+
     }
 
     public void DieEnemy(bool isFly)
