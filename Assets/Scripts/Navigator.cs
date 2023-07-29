@@ -10,7 +10,7 @@ public class Navigator : MonoBehaviour
     
     [Header("Gravity")] 
     
-    [Range(1f,1000f)]public float power = 1f; // gravity power
+    [Range(1f,1000f)]public float power = 2f; // gravity power
     [Range(-10f, 10f)] public float upOrDown; // direction of gravity
     [Range(1f,10f)]public float forceRange = 1f; // range of gravity
 
@@ -92,7 +92,9 @@ public class Navigator : MonoBehaviour
         {
             Rigidbody rbs = objs[i].GetComponent<Rigidbody>();
             
-            Vector3 forceDirection = new Vector3(gravitySource.x,upOrDown,gravitySource.z) - objs[i].transform.position;
+            // Vector3 forceDirection = new Vector3(gravitySource.x,upOrDown,gravitySource.z) - objs[i].transform.position;
+
+            Vector3 forceDirection = -Vector3.up;
        
             rbs.AddForceAtPosition(power * forceDirection.normalized,gravitySource);
 
