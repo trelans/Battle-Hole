@@ -26,6 +26,7 @@ public class EnemyShooter : MonoBehaviour
         shootFromPoint = transform;
         ammoCount = 0;
         isFiring = false;
+  
         ammoQueue = new Queue<GameObject>();
     }
 

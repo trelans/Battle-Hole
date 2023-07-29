@@ -17,7 +17,7 @@ public class Navigator : MonoBehaviour
     public ForceMode forceMode; // force type
     public LayerMask layerMask; // determines which layer should be affected by gravity
 
-
+    private bool isFull;
     private void Awake()
     {
      
@@ -77,7 +77,11 @@ public class Navigator : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Gravity(transform.position,forceRange,layerMask);
+        if (!isFull)
+        {
+            Gravity(transform.position,forceRange,layerMask);
+        }
+       
     }
 
     private void Gravity(Vector3 gravitySource, float range, LayerMask layerMask)
@@ -101,6 +105,10 @@ public class Navigator : MonoBehaviour
         }
     }
 
+    public void SetIsFull(bool b)
+    {
+        isFull = b;
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position,forceRange);

@@ -74,4 +74,10 @@ public class holeManager : MonoBehaviour
     //         slider.value += value;
     //     }
     // }
+
+
+    public void SetHoleSize(float size)
+    {
+        holeSize = size;
+    }
 }
