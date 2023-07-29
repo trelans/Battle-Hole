@@ -12,7 +12,7 @@ public class ProgressBar : MonoBehaviour
     private bool on;
     [SerializeField] private SpriteRenderer[] sprites;
     private destroyCubes d;
-
+    [SerializeField] private FillObject fillObject;
     private void Awake()
     {
         d = FindObjectOfType<destroyCubes>();
@@ -42,6 +42,7 @@ public class ProgressBar : MonoBehaviour
             float t = Mathf.Clamp01(elapsedTime / duration);
 
             spriteRenderer.size = new Vector2(t, spriteRenderer.size.y);
+            fillObject.ChangeFillAmount(t);
         }
       
     }
@@ -52,6 +53,7 @@ public class ProgressBar : MonoBehaviour
         spriteRenderer.size = new Vector2(0, spriteRenderer.size.y);
         elapsedTime = 0;
         on = true;
+        fillObject.ChangeFillAmount(0);
     }
 
     private void SetSprites(bool b)

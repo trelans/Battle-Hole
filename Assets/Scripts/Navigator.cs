@@ -67,7 +67,7 @@ public class Navigator : MonoBehaviour
                 // navigator.x = Mathf.Clamp(navigator.x, -5f, 5f);
                 // navigator.z = Mathf.Clamp(navigator.z, -5f, 5f);
 
-                navigator = Vector3.ClampMagnitude(navigator, 10f);
+                navigator = Vector3.ClampMagnitude(navigator, 30f);
                 
                 transform.position = Vector3.Lerp(transform.position,navigator,Time.deltaTime * maxAcceleration);
        

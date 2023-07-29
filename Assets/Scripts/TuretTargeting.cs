@@ -17,7 +17,8 @@ public class TuretTargeting : MonoBehaviour
     [SerializeField] private ProgressBar progressBar;
     private bool isFireStarted;
     private destroyCubes cubes;
-
+    private int ammoCount;
+    private int maxAmmo;
     private void Awake()
     {
         cubes = FindObjectOfType<destroyCubes>();
@@ -57,25 +58,34 @@ public class TuretTargeting : MonoBehaviour
         if (isFireStarted)
         {
 
-
-            if (ammoQueue != null && ammoQueue.transform.childCount > 0)
+            ammoCount = ammoQueue.transform.childCount;
+            if (ammoQueue != null && ammoCount > 0)
             {
                 Transform ammoToShoot = ammoQueue.transform.GetChild(0);
                 ammoToShoot.gameObject.SetActive(true);
+                ammoToShoot.localScale =  new Vector3(ammoToShoot.localScale.x,ammoToShoot.localScale.y,ammoToShoot.localScale.z )* 0.002f;
                 // Instantiate the ammo (bullet) at the ammoQueue's position and rotation
                 GameObject ammoInstance = Instantiate(ammoToShoot.gameObject, ammoQueue.transform.position,
                     ammoQueue.transform.rotation);
 
+              
+           
+
+         
                 // Apply force to shoot the ammo towards the target
                 Rigidbody ammoRigidbody = ammoInstance.GetComponent<Rigidbody>();
                 if (ammoRigidbody != null)
                 {
                     Vector3 shootingDirection = (target.position - ammoQueue.transform.position).normalized;
+                    Quaternion rotation = Quaternion.LookRotation(shootingDirection);
+                    ammoInstance.transform.rotation = rotation;
+                    ammoInstance.transform.Rotate(90,0,0); 
                     ammoRigidbody.AddForce(shootingDirection * shootingForce, ForceMode.Impulse);
                 }
 
                 // Remove the ammo from the queue (you may need to handle ammo depletion in a more sophisticated way)
                 Destroy(ammoToShoot.gameObject);
+                ammoCount--;
             }
             else
             {
@@ -87,6 +97,10 @@ public class TuretTargeting : MonoBehaviour
     public void SetIsFireStarted(bool b)
     {
         isFireStarted = b;
+        if (b)
+        {
+            maxAmmo = ammoQueue.transform.childCount;
+        }
     }
     void OnTriggerEnter(Collider other)
     {
