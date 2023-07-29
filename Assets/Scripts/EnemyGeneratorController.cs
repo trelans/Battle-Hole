@@ -55,7 +55,8 @@ public class EnemyGeneratorController : MonoBehaviour
         Vector3 curPosition = gameObject.transform.position;
         leavingSpeed = leavingSpeeds[(horizontalAmount - 1) / 2];
         leavingSpeed = leavingSpeed * speedOfObjects / 2;
-        leavingPeriod = 0.5f / (speedOfObjects / 2);
+        // leavingPeriod = 0.5f / (speedOfObjects / 2);
+        leavingPeriod = 0.5f;
         activeObjects = new List<GameObject>();
         activeObjectsEnemies = new List<Enemy>();
         for (int i = 0; i < horizontalAmount; i++)
@@ -80,7 +81,7 @@ public class EnemyGeneratorController : MonoBehaviour
             
             }
             curPosition = positionSave;
-            //curPosition += new Vector3(horizontalDistanceBetweenObjs, 0, 0);
+            curPosition += new Vector3(horizontalDistanceBetweenObjs, 0, 0);
             
         }
         activeObjects[activeObjects.Count / 2].SetActive(false);
@@ -104,8 +105,8 @@ public class EnemyGeneratorController : MonoBehaviour
                     
                     currentOrder = currentOrder + 1;
                     leftSecondsAgo = 0;
-                    randomFloat1 = UnityEngine.Random.Range(50f, 400f);
-                    randomFloat2 = UnityEngine.Random.Range(50f, 400f);
+                    randomFloat1 = UnityEngine.Random.Range(50f, 350f);
+                    randomFloat2 = UnityEngine.Random.Range(50f, 350f);
                     
                 }
 
