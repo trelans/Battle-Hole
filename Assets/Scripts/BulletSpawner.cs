@@ -50,7 +50,7 @@ public class BulletSpawner : MonoBehaviour
     {
         holePosition = new Vector2(navigator.transform.position.x, navigator.transform.position.z); 
 
-        if (spawnLimit > spawnedCurrent)
+        if (Mathf.Infinity > spawnedCurrent)
         {
             timeAfterSpawn += Time.deltaTime;
 
@@ -102,8 +102,11 @@ public class BulletSpawner : MonoBehaviour
             randomZ = UnityEngine.Random.Range(originToHole.y + holeRadius, areaRadius - lineOffset);
         }
 
-        // randomX = Mathf.Round(randomX) * holeRadius;
-        // randomZ = Mathf.Round(randomZ) * holeRadius;
+        randomX = Mathf.Round(randomX) * 2;
+        randomZ = Mathf.Round(randomZ) * 2;
+
+        randomZ = Mathf.Clamp(randomZ, -areaRadius * 2, areaRadius - lineOffset);
+
         randomPos = new Vector3(origin.x + randomX, yPos+yOffset, origin.y + randomZ);
         return randomPos;
 

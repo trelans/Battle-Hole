@@ -11,7 +11,7 @@ public class destroyCubes : MonoBehaviour
   [SerializeField] private GameObject bombs;
 
   [SerializeField] private int bombIncrement = 1;
-  [SerializeField] private int ammoIncrement = 2;
+  [SerializeField] private int ammoIncrement = 3;
 
   private int ammosCollected = 0;
   private int bombsCollected = 0;
@@ -58,7 +58,7 @@ public class destroyCubes : MonoBehaviour
             other.gameObject.SetActive(false);
             other.gameObject.transform.position = ammos.transform.position;
             other.gameObject.transform.SetParent(ammos.transform);
-            for (int i = 0; i < ammoIncrement; i++)
+            for (int i = 0; i < ammoIncrement - 1; i++)
             {
                 Instantiate(other.gameObject, other.gameObject.transform).transform.SetParent(ammos.transform);
             }
@@ -72,7 +72,7 @@ public class destroyCubes : MonoBehaviour
             other.gameObject.SetActive(false);
             other.gameObject.transform.position = bombs.transform.position;
             other.gameObject.transform.SetParent(bombs.transform);
-            for (int i = 0; i < bombIncrement; i++)
+            for (int i = 0; i < bombIncrement - 1; i++)
             {
                 Instantiate(other.gameObject, other.gameObject.transform).transform.SetParent(bombs.transform);
             }
