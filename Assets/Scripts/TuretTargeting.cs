@@ -13,7 +13,7 @@ public class TuretTargeting : MonoBehaviour
 
     private Transform target;
     private float lastShotTime;
-    private LineRenderer rangeIndicator; // LineRenderer to draw the circle range
+
     [SerializeField] private ProgressBar progressBar;
     private bool isFireStarted;
     private destroyCubes cubes;
@@ -26,14 +26,7 @@ public class TuretTargeting : MonoBehaviour
 
     void Start()
     {
-        // Create and set up the LineRenderer
-        rangeIndicator = gameObject.AddComponent<LineRenderer>();
-        rangeIndicator.material = new Material(Shader.Find("Standard"));
-        rangeIndicator.material.color = Color.gray;
-        rangeIndicator.loop = true;
-        rangeIndicator.startWidth = 0.1f;
-        rangeIndicator.endWidth = 0.1f;
-        UpdateRangeIndicator();
+
     }
 
     void Update()
@@ -152,40 +145,6 @@ public class TuretTargeting : MonoBehaviour
                 target = null;
             }
         }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        UpdateRangeIndicator();
-        
-    }
-
-    void UpdateRangeIndicator()
-    {
-        if (rangeIndicator == null)
-            return;
-
-        // Draw the half circle range on the XZ plane (center's Y position)
-        int segments = 180; // Change this to 180 for half circle
-        float[] angles = new float[segments + 1];
-        float rotationAngle = -Mathf.PI / 2f; // -90 degrees in radians (opposite direction)
-        for (int i = 0; i <= segments; i++)
-        {
-            // Divide by 2 to get half circle, and add the rotation angle to rotate counterclockwise
-            float angle = (Mathf.PI * 1f / segments) * i + rotationAngle; 
-            angles[i] = angle;
-        }
-
-        Vector3[] points = new Vector3[segments + 1];
-        for (int i = 0; i <= segments; i++)
-        {
-            float x = Mathf.Sin(angles[i]) * range;
-            float z = Mathf.Cos(angles[i]) * range;
-            points[i] = new Vector3(x + transform.position.x, transform.position.y, z + transform.position.z);
-        }
-
-        rangeIndicator.positionCount = segments + 1;
-        rangeIndicator.SetPositions(points);
     }
 
 
