@@ -8,7 +8,7 @@ public class BombShooter : MonoBehaviour
     [SerializeField]
     private bool isShooting = false;
 
-    private float magnitude = 8.5f;
+    public float magnitude = 50.5f;
 
     [SerializeField]
     private HealthBar healthBar;
