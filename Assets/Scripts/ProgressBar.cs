@@ -12,7 +12,7 @@ public class ProgressBar : MonoBehaviour
     private bool on;
 
     [SerializeField]
-    private bool isBomb;
+    public bool isBomb;
     [SerializeField] private SpriteRenderer[] sprites;
     private destroyCubes d;
     [SerializeField] private FillObject fillObject;

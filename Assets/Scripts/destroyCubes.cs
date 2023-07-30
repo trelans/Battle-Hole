@@ -10,6 +10,9 @@ public class destroyCubes : MonoBehaviour
   [SerializeField] private GameObject ammos;
   [SerializeField] private GameObject bombs;
 
+  [SerializeField] private int bombIncrement = 1;
+  [SerializeField] private int ammoIncrement = 1;
+
   private int ammosCollected = 0;
   private int bombsCollected = 0;
  [SerializeField] private int ammoMax;
@@ -62,7 +65,7 @@ public class destroyCubes : MonoBehaviour
             }
             
             ammosCollected++;
-            UpdateAmmoCount(1);
+            UpdateAmmoCount(ammoIncrement);
 
         }
         if (other.CompareTag("Bomb"))
@@ -76,7 +79,7 @@ public class destroyCubes : MonoBehaviour
             }
             
             bombsCollected++;
-            UpdateAmmoCount(1);
+            UpdateAmmoCount(bombIncrement);
 
         }
 
@@ -101,12 +104,12 @@ public class destroyCubes : MonoBehaviour
     {
         if (isBomb)
         {
-            currentAmmo = currentAmmo - bombsCollected;
+            currentAmmo = currentAmmo - bombsCollected * (multipleAmmo + bombIncrement);
             bombsCollected = 0;
         }
         else
         {
-            currentAmmo = currentAmmo - ammosCollected;
+            currentAmmo = currentAmmo - ammosCollected * (multipleAmmo + ammoIncrement);
             ammosCollected = 0;
         }
        
@@ -130,8 +133,11 @@ public class destroyCubes : MonoBehaviour
         ammoIcon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(ammosCollected.ToString());
     }
 
-    public int GetCurrentAmmo()
+    public int GetCurrentAmmo(bool isBomb)
     {
-        return currentAmmo;
+        int count = ammosCollected;
+        if (isBomb)
+            count = bombsCollected;
+        return count;
     }
 }
