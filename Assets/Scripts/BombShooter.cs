@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BombShooter : MonoBehaviour
@@ -25,12 +27,28 @@ public class BombShooter : MonoBehaviour
     [SerializeField] private GameObject line;
 
     private Rigidbody rb;
+
+    [SerializeField] private TextMeshPro bombText;
+
+    private int currentTime = 8;
+
+    private GameObject particle;
+    [SerializeField] private GameObject explosions;
+    
     // Start is called before the first frame update
+    private void Awake()
+    {
+        healthBar = FindObjectOfType<HealthBar>();
+        line = GameObject.FindWithTag("Line");;
+        explosions = GameObject.FindWithTag("Explosions");;
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        healthBar = FindObjectOfType<HealthBar>();
-        StartCoroutine(Countdown(explosionTime)); 
+     
+        StartCoroutine(Countdown(explosionTime));
+     
     }
 
     // Update is called once per frame
@@ -65,7 +83,13 @@ public class BombShooter : MonoBehaviour
 
     IEnumerator Countdown (int seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        for (int i = 0; i < seconds; i++)
+        {
+            yield return new WaitForSeconds(1);
+            currentTime--;
+            bombText.SetText(currentTime.ToString());
+        }
+   
 
         Explode();
     }
@@ -105,7 +129,10 @@ public class BombShooter : MonoBehaviour
                 hitCollider.gameObject.GetComponent<Enemy>().DieEnemy(false);
             }
         }
-            gameObject.SetActive(false);
+        particle.transform.SetParent(explosions.transform);
+        particle.SetActive(true); 
+        gameObject.SetActive(false);
+       
     }
 
 

@@ -75,10 +75,19 @@ public class TuretTargeting : MonoBehaviour
                     ammoToShoot.localScale =  new Vector3(ammoToShoot.localScale.x,ammoToShoot.localScale.y,ammoToShoot.localScale.z )* adjust;
                 }
 
-
-            
-                GameObject ammoInstance = Instantiate(ammoToShoot.gameObject, ammoQueue.transform.position,
-                                ammoQueue.transform.rotation);
+                GameObject ammoInstance;
+                if (progressBar.isBomb)
+                {
+                     ammoInstance = Instantiate(ammoToShoot.gameObject, ammoQueue.transform.position,
+                        ammoToShoot.transform.rotation);
+               
+                }
+                else
+                {
+                     ammoInstance = Instantiate(ammoToShoot.gameObject, ammoQueue.transform.position,
+                        ammoQueue.transform.rotation);
+                }
+        
                 // Instantiate the ammo (bullet) at the ammoQueue's position and rotation
 
 
@@ -89,9 +98,13 @@ public class TuretTargeting : MonoBehaviour
                 if (ammoRigidbody != null)
                 {
                     Vector3 shootingDirection = (target.position - ammoQueue.transform.position).normalized;
-                    Quaternion rotation = Quaternion.LookRotation(shootingDirection);
-                    ammoInstance.transform.rotation = rotation;
-                    ammoInstance.transform.Rotate(90,0,0); 
+                    if (!progressBar.isBomb)
+                    {
+                        Quaternion rotation = Quaternion.LookRotation(shootingDirection);
+                        ammoInstance.transform.rotation = rotation;
+                        ammoInstance.transform.Rotate(90,0,0); 
+                    }
+           
 
                     if (progressBar.isBomb)
                     {
