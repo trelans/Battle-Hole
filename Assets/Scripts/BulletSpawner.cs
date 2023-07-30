@@ -105,6 +105,8 @@ public class BulletSpawner : MonoBehaviour
         randomX = Mathf.Round(randomX) * 2;
         randomZ = Mathf.Round(randomZ) * 2;
 
+        randomZ = Mathf.Clamp(randomZ, -areaRadius * 2, areaRadius - lineOffset);
+
         randomPos = new Vector3(origin.x + randomX, yPos+yOffset, origin.y + randomZ);
         return randomPos;
 

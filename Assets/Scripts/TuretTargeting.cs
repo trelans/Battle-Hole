@@ -11,7 +11,10 @@ public class TuretTargeting : MonoBehaviour
     public float shootingForce = 100f;
     public float range = 10f; // The range of the turret's sphere detection
 
+
     private Transform target;
+
+    private float saved;
     private float lastShotTime;
     private LineRenderer rangeIndicator; // LineRenderer to draw the circle range
     [SerializeField] private ProgressBar progressBar;
@@ -67,11 +70,16 @@ public class TuretTargeting : MonoBehaviour
 
                 float adjust = 0.002f;
                 
-                if (progressBar.isBomb)
+                if (progressBar.isBomb && ammoToShoot.localScale.magnitude > 1.5f)
                 {
-                    adjust = adjust * 8; 
+                    // ammoToShoot.localScale =  new Vector3(ammoToShoot.localScale.x,ammoToShoot.localScale.y,ammoToShoot.localScale.z )* adjust * 4 ;
+                    ammoToShoot.localScale =  new Vector3(80f, 80f, 80f);
+                    Debug.Log("localScala: " + ammoToShoot.localScale.x);
                 }
+                else
+                {
                     ammoToShoot.localScale =  new Vector3(ammoToShoot.localScale.x,ammoToShoot.localScale.y,ammoToShoot.localScale.z )* adjust;
+                }
 
 
                     GameObject ammoInstance = Instantiate(ammoToShoot.gameObject, ammoQueue.transform.position,
@@ -94,7 +102,7 @@ public class TuretTargeting : MonoBehaviour
                     if (progressBar.isBomb)
                     {
                         Vector3 direction = shootingDirection + Vector3.up; 
-                        float force = 25;
+                        float force = 5;
                         ammoRigidbody.velocity = Vector3.zero;
                         ammoRigidbody.AddForce(direction * force, ForceMode.Impulse);
                     }
@@ -135,7 +143,6 @@ public class TuretTargeting : MonoBehaviour
             if (!isFireStarted && cubes.GetCurrentAmmo(progressBar.isBomb) > 0)
             {
                 progressBar.ResetTime();
-                isFireStarted = true;
             }
         
             

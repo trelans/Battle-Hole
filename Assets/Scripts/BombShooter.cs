@@ -8,14 +8,19 @@ public class BombShooter : MonoBehaviour
     [SerializeField]
     private bool isShooting = false;
 
-    private float magnitude = 25f;
+    private float magnitude = 8.5f;
+
+    [SerializeField]
+    private HealthBar healthBar;
 
     private float inverse = -1;
 
     private float timeAfterLanding = 0;
     private float enemySideCooldown = 2;
 
-    private float explosionTime = 6;
+    private int explosionTime = 8;
+
+    bool stick = false;
 
     [SerializeField] private GameObject line;
 
@@ -23,32 +28,46 @@ public class BombShooter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>(); 
+        rb = GetComponent<Rigidbody>();
+        healthBar = FindObjectOfType<HealthBar>();
+        StartCoroutine(Countdown(explosionTime)); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        explosionTime -= Time.deltaTime;
-
 
         if (IsOnGround())
         {
-            if (explosionTime <= 0)
+            if (stick)
             {
-                Explode();
+                rb.velocity = Vector3.zero;
+                stick = false;
             }
-            else
-            {
 
+            if (!IsOnPlayerSide() && timeAfterLanding > enemySideCooldown)
+            {
+                Shoot();
+                timeAfterLanding = 0;
             }
+
+
+            timeAfterLanding += Time.deltaTime;
         }
-        if (explosionTime <= 0 && IsOnGround())
+        else
         {
-            Explode();
+            stick = true;
         }
 
+        Debug.Log(stick);
 
+    }
+
+    IEnumerator Countdown (int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        Explode();
     }
 
     private void Shoot()
@@ -67,13 +86,26 @@ public class BombShooter : MonoBehaviour
 
     private bool IsOnGround()
     {
-        return transform.position.y <= line.transform.position.y;
+        return transform.position.y <= line.transform.position.y + 4;
     }
 
-    private bool Explode()
+    private void Explode()
     {
-        gameObject.SetActive(false);
-        return false;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2);
+        if (!gameObject.activeSelf || IsOnPlayerSide())
+        {
+            healthBar.DecreaseHealth();
+            gameObject.SetActive(false);
+            return;
+        }
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.layer == 7)
+            {
+                hitCollider.gameObject.GetComponent<Enemy>().DieEnemy(false);
+            }
+        }
+            gameObject.SetActive(false);
     }
 
 
