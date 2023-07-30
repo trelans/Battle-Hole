@@ -64,10 +64,19 @@ public class TuretTargeting : MonoBehaviour
             {
                 Transform ammoToShoot = ammoQueue.transform.GetChild(0);
                 ammoToShoot.gameObject.SetActive(true);
-                ammoToShoot.localScale =  new Vector3(ammoToShoot.localScale.x,ammoToShoot.localScale.y,ammoToShoot.localScale.z )* 0.002f;
+
+                float adjust = 0.002f;
+                
+                if (progressBar.isBomb)
+                {
+                    adjust = adjust * 8; 
+                }
+                    ammoToShoot.localScale =  new Vector3(ammoToShoot.localScale.x,ammoToShoot.localScale.y,ammoToShoot.localScale.z )* adjust;
+
+
+                    GameObject ammoInstance = Instantiate(ammoToShoot.gameObject, ammoQueue.transform.position,
+                                ammoQueue.transform.rotation);
                 // Instantiate the ammo (bullet) at the ammoQueue's position and rotation
-                GameObject ammoInstance = Instantiate(ammoToShoot.gameObject, ammoQueue.transform.position,
-                    ammoQueue.transform.rotation);
 
               
            
@@ -81,7 +90,18 @@ public class TuretTargeting : MonoBehaviour
                     Quaternion rotation = Quaternion.LookRotation(shootingDirection);
                     ammoInstance.transform.rotation = rotation;
                     ammoInstance.transform.Rotate(90,0,0); 
-                    ammoRigidbody.AddForce(shootingDirection * shootingForce, ForceMode.Impulse);
+
+                    if (progressBar.isBomb)
+                    {
+                        Vector3 direction = shootingDirection + Vector3.up; 
+                        float force = 25;
+                        ammoRigidbody.velocity = Vector3.zero;
+                        ammoRigidbody.AddForce(direction * force, ForceMode.Impulse);
+                    }
+                    else
+                    {
+                        ammoRigidbody.AddForce(shootingDirection * shootingForce, ForceMode.Impulse);
+                    }
                 }
 
                 // Remove the ammo from the queue (you may need to handle ammo depletion in a more sophisticated way)

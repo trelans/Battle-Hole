@@ -955,7 +955,6 @@ MonoBehaviour:
   tmp: {fileID: 648582110}
   ammoIcon: {fileID: 407259383}
   bombIcon: {fileID: 1771686803}
-  multipleAmmo: 2
 --- !u!1 &402153861
 GameObject:
   m_ObjectHideFlags: 0
@@ -4668,6 +4667,7 @@ GameObject:
   - component: {fileID: 1711813854454616873}
   - component: {fileID: 919132148465906430}
   - component: {fileID: 919132148465906429}
+  - component: {fileID: 919132148465906431}
   m_Layer: 0
   m_Name: Asset_Bomb
   m_TagString: Bomb
@@ -4704,6 +4704,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &919132148465906431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148465906428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef223e7bd2939b24eb11bf8ba10e9c29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isShooting: 0
 --- !u!1 &971088073295379605
 GameObject:
   m_ObjectHideFlags: 0
