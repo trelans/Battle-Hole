@@ -22,6 +22,7 @@ public class TuretTargeting : MonoBehaviour
     private destroyCubes cubes;
     private int ammoCount;
     private int maxAmmo;
+    [SerializeField] private GameObject activeAmmos;
     private void Awake()
     {
         cubes = FindObjectOfType<destroyCubes>();
@@ -56,10 +57,13 @@ public class TuretTargeting : MonoBehaviour
         if (isFireStarted)
         {
 
-            ammoCount = ammoQueue.transform.childCount;
-            if (ammoQueue != null && ammoCount > 0)
+        
+            ammoCount = activeAmmos.transform.childCount;
+        
+            
+            if (activeAmmos != null && ammoCount > 0)
             {
-                Transform ammoToShoot = ammoQueue.transform.GetChild(0);
+                Transform ammoToShoot = activeAmmos.transform.GetChild(0);
                 ammoToShoot.gameObject.SetActive(true);
 
                 float adjust = .5f;
@@ -139,6 +143,14 @@ public class TuretTargeting : MonoBehaviour
         if (b)
         {
             maxAmmo = ammoQueue.transform.childCount;
+            if (!progressBar.isBomb)
+            {
+                for (int i = 0; i < maxAmmo; i++)
+                {
+                    ammoQueue.transform.GetChild(0).SetParent(activeAmmos.transform);
+                }
+            }
+
         }
     }
     void OnTriggerEnter(Collider other)
