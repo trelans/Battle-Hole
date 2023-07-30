@@ -34,7 +34,7 @@ public class TuretTargeting : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(turretHead.rotation.eulerAngles);
+    
         if (target != null)
         {
             Vector3 targetDirection = target.position - turretHead.position;
@@ -61,7 +61,7 @@ public class TuretTargeting : MonoBehaviour
                 Transform ammoToShoot = ammoQueue.transform.GetChild(0);
                 ammoToShoot.gameObject.SetActive(true);
 
-                float adjust = 0.002f;
+                float adjust = .5f;
                 
                 if (progressBar.isBomb && ammoToShoot.localScale.magnitude > 1.5f)
                 {
@@ -75,14 +75,14 @@ public class TuretTargeting : MonoBehaviour
                 }
 
 
+            
                 GameObject ammoInstance = Instantiate(ammoToShoot.gameObject, ammoQueue.transform.position,
                                 ammoQueue.transform.rotation);
                 // Instantiate the ammo (bullet) at the ammoQueue's position and rotation
 
-              
-           
 
-         
+
+
                 // Apply force to shoot the ammo towards the target
                 Rigidbody ammoRigidbody = ammoInstance.GetComponent<Rigidbody>();
                 if (ammoRigidbody != null)
@@ -152,6 +152,18 @@ public class TuretTargeting : MonoBehaviour
                 target = null;
             }
         }
+        
+        if (other.CompareTag("Player"))
+        {
+            if (!isFireStarted && progressBar.IsReady())
+            {
+              
+                progressBar.CloseTime();
+            }
+        
+            
+        }
+
     }
 
 

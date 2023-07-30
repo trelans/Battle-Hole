@@ -59,7 +59,7 @@ public class BombShooter : MonoBehaviour
             stick = true;
         }
 
-        Debug.Log(stick);
+    
 
     }
 

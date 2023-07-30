@@ -951,11 +951,13 @@ MonoBehaviour:
   ammos: {fileID: 1503649212}
   bombs: {fileID: 717915746}
   bombIncrement: 1
-  ammoIncrement: 1
+  ammoIncrement: 3
   ammoMax: 18
   tmp: {fileID: 648582110}
   ammoIcon: {fileID: 407259383}
   bombIcon: {fileID: 1771686803}
+  bombTMP: {fileID: 342125617}
+  ammoTMP: {fileID: 359652550}
 --- !u!1 &383315670
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ public class TestScript : MonoBehaviour
 {
     private void OnCollisionStay(Collision collisionInfo)
     {
-        Debug.Log(    collisionInfo.gameObject.name);
+        
     
     }
 }

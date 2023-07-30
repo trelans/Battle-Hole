@@ -58,6 +58,14 @@ public class ProgressBar : MonoBehaviour
         on = true;
         fillObject.ChangeFillAmount(0);
     }
+    public void CloseTime()
+    {
+        SetSprites(false);
+        spriteRenderer.size = new Vector2(0, spriteRenderer.size.y);
+        elapsedTime = 0;
+        on = false;
+        fillObject.ChangeFillAmount(0);
+    }
 
     private void SetSprites(bool b)
     {
@@ -65,5 +73,10 @@ public class ProgressBar : MonoBehaviour
         {
             sprites[i].enabled = b;
         }
+    }
+
+    public bool IsReady()
+    {
+        return !((elapsedTime / duration) < 1);
     }
 }

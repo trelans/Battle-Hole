@@ -25,6 +25,10 @@ public class destroyCubes : MonoBehaviour
   private bool isFull;
   private holeManager hole;
   private Navigator navigator;
+  
+  [SerializeField] private TextMeshProUGUI bombTMP;
+  [SerializeField] private TextMeshProUGUI ammoTMP;
+  
     private void Awake()
     {
         hole = FindObjectOfType<holeManager>();
@@ -60,7 +64,9 @@ public class destroyCubes : MonoBehaviour
             other.gameObject.transform.SetParent(ammos.transform);
             for (int i = 0; i < ammoIncrement - 1; i++)
             {
-                Instantiate(other.gameObject, other.gameObject.transform).transform.SetParent(ammos.transform);
+              GameObject newObj =   Instantiate(other.gameObject, other.gameObject.transform) ; 
+              newObj.transform.SetParent(ammos.transform) ; 
+              newObj.transform.localScale = other.gameObject.transform.localScale;
             }
             
             ammosCollected++;
@@ -125,11 +131,14 @@ public class destroyCubes : MonoBehaviour
     public void SetUI()
     {
         tmp.SetText(currentAmmo + "/" + ammoMax);
-        bombIcon.SetActive(bombsCollected > 0);
-        bombIcon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(bombsCollected.ToString());
-
+     
+        bombIcon.SetActive(bombsCollected > 0); 
+        bombTMP.SetText(bombsCollected.ToString());
+        bombTMP.gameObject.SetActive(bombsCollected > 0); 
+        
         ammoIcon.SetActive(ammosCollected > 0);
-        ammoIcon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(ammosCollected.ToString());
+        ammoTMP.SetText(ammosCollected.ToString());
+        ammoTMP.gameObject.SetActive(ammosCollected > 0); 
     }
 
     public int GetCurrentAmmo(bool isBomb)
