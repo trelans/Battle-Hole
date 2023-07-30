@@ -11,6 +11,12 @@ public class EnemySpawnerHandler : MonoBehaviour
    private int currentSpawnCount;
    public float interval;
    private float currentTime;
+   private GameHandler gameHandler;
+
+   private void Awake()
+   {
+       gameHandler = FindObjectOfType<GameHandler>();
+   }
 
    private void Start()
    {
@@ -26,6 +32,12 @@ public class EnemySpawnerHandler : MonoBehaviour
            currentSpawnCount++;
            currentTime = 0;
            CreateSpawner();
+       }
+
+       if (currentTime >= interval && currentSpawnCount >= count)
+       {
+           gameHandler.OpenWin();
+           
        }
        
    }

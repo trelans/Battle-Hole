@@ -57,8 +57,13 @@ public class TuretTargeting : MonoBehaviour
         if (isFireStarted)
         {
 
-        
-            ammoCount = activeAmmos.transform.childCount;
+            if (progressBar.isBomb)
+            {
+                activeAmmos = ammoQueue;
+          
+            }
+            ammoCount = activeAmmos.transform.childCount; 
+           
         
             
             if (activeAmmos != null && ammoCount > 0)
@@ -172,6 +177,7 @@ public class TuretTargeting : MonoBehaviour
     {
         if (other.CompareTag(enemyTag))
         {
+            
             target = other.transform;
         }
     }

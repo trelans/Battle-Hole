@@ -20,9 +20,9 @@ public class BombShooter : MonoBehaviour
     private float inverse = -1;
 
     private float timeAfterLanding = 0;
-    private float enemySideCooldown = 6;
+    private float enemySideCooldown = 7;
 
-    private int explosionTime = 30;
+    private int explosionTime = 20;
 
     bool stick = false;
 
@@ -119,7 +119,7 @@ public class BombShooter : MonoBehaviour
     {
         particle.transform.SetParent(explosions.transform);
         particle.SetActive(true); 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5);
         if (!gameObject.activeSelf || IsOnPlayerSide())
         {
             healthBar.DecreaseHealth();
@@ -130,7 +130,7 @@ public class BombShooter : MonoBehaviour
         {
             if (hitCollider.gameObject.layer == 7)
             {
-                hitCollider.gameObject.GetComponent<Enemy>().DieEnemy(false);
+                hitCollider.gameObject.GetComponent<Enemy>().DieEnemy(true);
             }
         }
     
