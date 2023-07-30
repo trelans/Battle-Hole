@@ -75,7 +75,7 @@ public class TuretTargeting : MonoBehaviour
                 }
 
 
-                    GameObject ammoInstance = Instantiate(ammoToShoot.gameObject, ammoQueue.transform.position,
+                GameObject ammoInstance = Instantiate(ammoToShoot.gameObject, ammoQueue.transform.position,
                                 ammoQueue.transform.rotation);
                 // Instantiate the ammo (bullet) at the ammoQueue's position and rotation
 

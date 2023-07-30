@@ -25,7 +25,7 @@ public class HealthBar : MonoBehaviour
   {
     currentHealth -= 0.1f;
     slider.fillAmount = currentHealth;
-    if (currentHealth == 0)
+    if (currentHealth < 0)
     {
       //GameOver
       gameHandler.GameOver();

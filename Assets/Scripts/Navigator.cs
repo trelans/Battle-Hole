@@ -18,6 +18,8 @@ public class Navigator : MonoBehaviour
     public LayerMask layerMask; // determines which layer should be affected by gravity
 
     private bool isFull;
+    // Update is called once per frame
+    public float moveSpeed = 10f; // Adjust this value to control the movement speed
     private void Awake()
     {
      
@@ -28,20 +30,21 @@ public class Navigator : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             MoveByTouch = true;
-            
+
             Plane plane = new Plane(Vector3.up, 0f);
-        
+
             float Distance;
-            
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        
-            if (plane.Raycast(ray,out Distance))
+
+            if (plane.Raycast(ray, out Distance))
             {
                 _mouseStartPos = ray.GetPoint(Distance);
                 PlayerStartPos = transform.position;
@@ -51,14 +54,14 @@ public class Navigator : MonoBehaviour
         {
             MoveByTouch = false;
         }
-        
+
         if (MoveByTouch)
         {
             Plane plane = new Plane(Vector3.up, 0f);
             float Distance;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            
-            if (plane.Raycast(ray,out Distance))
+
+            if (plane.Raycast(ray, out Distance))
             {
                 Vector3 MousePos = ray.GetPoint(Distance);
                 Vector3 move = MousePos - _mouseStartPos;
@@ -68,12 +71,13 @@ public class Navigator : MonoBehaviour
                 // navigator.z = Mathf.Clamp(navigator.z, -5f, 5f);
 
                 navigator = Vector3.ClampMagnitude(navigator, 30f);
-                
-                transform.position = Vector3.Lerp(transform.position,navigator,Time.deltaTime * maxAcceleration);
-       
+
+                // Instead of using Lerp, use MoveTowards to achieve constant speed movement
+                transform.position = Vector3.MoveTowards(transform.position, navigator, Time.deltaTime * moveSpeed);
             }
         }
     }
+
 
     private void FixedUpdate()
     {
