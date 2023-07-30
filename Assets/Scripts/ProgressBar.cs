@@ -50,6 +50,11 @@ public class ProgressBar : MonoBehaviour
       
     }
 
+
+    public void FillBarUpdate(float amount)
+    {
+        fillObject.ChangeFillAmount(amount);
+    }
     public void ResetTime()
     {
         SetSprites(true);
@@ -77,6 +82,6 @@ public class ProgressBar : MonoBehaviour
 
     public bool IsReady()
     {
-        return !((elapsedTime / duration) < 1);
+        return ((elapsedTime / duration) < 1);
     }
 }

@@ -35,7 +35,7 @@ public class TuretTargeting : MonoBehaviour
     void Update()
     {
     
-        if (target != null)
+        if (target != null && isFireStarted)
         {
             Vector3 targetDirection = target.position - turretHead.position;
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
@@ -48,6 +48,7 @@ public class TuretTargeting : MonoBehaviour
                 lastShotTime = Time.time;
             }
         }
+    
     }
 
     void Shoot()
@@ -108,6 +109,9 @@ public class TuretTargeting : MonoBehaviour
                 // Remove the ammo from the queue (you may need to handle ammo depletion in a more sophisticated way)
                 Destroy(ammoToShoot.gameObject);
                 ammoCount--;
+                Debug.Log(ammoCount/maxAmmo);
+                if(maxAmmo != 0 )
+                    progressBar.FillBarUpdate((float) ammoCount/maxAmmo);
             }
             else
             {
@@ -166,6 +170,10 @@ public class TuretTargeting : MonoBehaviour
 
     }
 
+    public float GetAmmoAmount(float amount)
+    {
+        return ammoCount / maxAmmo;
+    }
 
 
 }
