@@ -7,6 +7,7 @@ using UnityEngine;
 public class BombShooter : MonoBehaviour
 {
 
+
     [SerializeField]
     private bool isShooting = false;
 
@@ -15,12 +16,13 @@ public class BombShooter : MonoBehaviour
     [SerializeField]
     private HealthBar healthBar;
 
+    private GameManager manager;
     private float inverse = -1;
 
     private float timeAfterLanding = 0;
     private float enemySideCooldown = 2;
 
-    private int explosionTime = 8;
+    private int explosionTime = 30;
 
     bool stick = false;
 
@@ -30,8 +32,6 @@ public class BombShooter : MonoBehaviour
 
     [SerializeField] private TextMeshPro bombText;
 
-    private int currentTime = 8;
-
     private GameObject particle;
     [SerializeField] private GameObject explosions;
     
@@ -39,15 +39,20 @@ public class BombShooter : MonoBehaviour
     private void Awake()
     {
         healthBar = FindObjectOfType<HealthBar>();
-        line = GameObject.FindWithTag("Line");;
+        line = GameObject.FindWithTag("Line");
+        manager = FindObjectOfType<GameManager>();
         explosions = GameObject.FindWithTag("Explosions");;
     }
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-     
-        StartCoroutine(Countdown(explosionTime));
+
+        if (!manager.ticking)
+        {
+            manager.explostionTime = explosionTime;
+            manager.StartRoutine();
+        }
      
     }
 
@@ -57,6 +62,15 @@ public class BombShooter : MonoBehaviour
 
         if (IsOnGround())
         {
+            if (manager.exploded)
+            {
+                Explode();
+            }
+            else
+            {
+                bombText.SetText(manager.explostionTime.ToString());
+            }
+
             if (stick)
             {
                 rb.velocity = Vector3.zero;
@@ -81,18 +95,6 @@ public class BombShooter : MonoBehaviour
 
     }
 
-    IEnumerator Countdown (int seconds)
-    {
-        for (int i = 0; i < seconds; i++)
-        {
-            yield return new WaitForSeconds(1);
-            currentTime--;
-            bombText.SetText(currentTime.ToString());
-        }
-   
-
-        Explode();
-    }
 
     private void Shoot()
     {
