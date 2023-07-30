@@ -909,8 +909,8 @@ MonoBehaviour:
   ammos: {fileID: 1503649212}
   bombs: {fileID: 717915746}
   bombIncrement: 1
-  ammoIncrement: 3
-  ammoMax: 18
+  ammoIncrement: 6
+  ammoMax: 100
   tmp: {fileID: 648582110}
   ammoIcon: {fileID: 407259383}
   bombIcon: {fileID: 1771686803}
@@ -4899,7 +4899,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5226291939922084463}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.1, y: 0.59, z: -6.9}
+  m_LocalPosition: {x: 1.11, y: 0.59, z: 19.6}
   m_LocalScale: {x: 0.63649, y: 0.63649, z: 0.63649}
   m_Children: []
   m_Father: {fileID: 823255773}
