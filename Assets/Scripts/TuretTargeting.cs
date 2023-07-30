@@ -111,7 +111,6 @@ public class TuretTargeting : MonoBehaviour
         
         if (other.CompareTag("Player"))
         {
-            Debug.Log("asdasds");
             if (!isFireStarted && cubes.GetCurrentAmmo() > 0)
             {
                 progressBar.ResetTime();

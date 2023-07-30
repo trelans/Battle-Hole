@@ -97,13 +97,13 @@ public class BulletSpawner : MonoBehaviour
         {
             randomZ = UnityEngine.Random.Range(-areaRadius, originToHole.y - holeRadius);
         }
-        else
+        else if (originToHole.y < lineOffset)
         {
             randomZ = UnityEngine.Random.Range(originToHole.y + holeRadius, areaRadius - lineOffset);
         }
 
-        randomX = Mathf.Round(randomX) * holeRadius;
-        randomZ = Mathf.Round(randomZ) * holeRadius;
+        // randomX = Mathf.Round(randomX) * holeRadius;
+        // randomZ = Mathf.Round(randomZ) * holeRadius;
         randomPos = new Vector3(origin.x + randomX, yPos+yOffset, origin.y + randomZ);
         return randomPos;
 

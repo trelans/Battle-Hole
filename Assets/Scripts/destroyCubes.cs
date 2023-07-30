@@ -8,9 +8,17 @@ public class destroyCubes : MonoBehaviour
 
     private float value;
   [SerializeField] private GameObject ammos;
+  [SerializeField] private GameObject bombs;
+
+  private int ammosCollected = 0;
+  private int bombsCollected = 0;
  [SerializeField] private int ammoMax;
   private int currentAmmo;
   [SerializeField] private TextMeshProUGUI tmp;
+  [SerializeField] private GameObject ammoIcon;
+  [SerializeField] private GameObject bombIcon;
+
+
   private bool isFull;
   private holeManager hole;
   private Navigator navigator;
@@ -25,6 +33,7 @@ public class destroyCubes : MonoBehaviour
     private void Start()
     {
         value = 100f / GameObject.FindGameObjectsWithTag("block").Length;
+        SetUI();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,37 +61,73 @@ public class destroyCubes : MonoBehaviour
                 Instantiate(other.gameObject, other.gameObject.transform).transform.SetParent(ammos.transform);
             }
             
-            UpdateAmmoCount();
+            ammosCollected++;
+            UpdateAmmoCount(1);
+
+        }
+        if (other.CompareTag("Bomb"))
+        {
+            other.gameObject.SetActive(false);
+            other.gameObject.transform.position = bombs.transform.position;
+            other.gameObject.transform.SetParent(bombs.transform);
+            for (int i = 0; i < multipleAmmo; i++)
+            {
+                Instantiate(other.gameObject, other.gameObject.transform).transform.SetParent(bombs.transform);
+            }
+            
+            bombsCollected++;
+            UpdateAmmoCount(1);
 
         }
 
-
     }
 
-    private void UpdateAmmoCount()
+    private void UpdateAmmoCount(int increment)
     {
        
-        currentAmmo = multipleAmmo+ 1  + currentAmmo ;
-        tmp.SetText(currentAmmo + "/" + ammoMax);
-        if (currentAmmo == ammoMax)
+        currentAmmo = currentAmmo + increment + multipleAmmo;
+        if (currentAmmo >= ammoMax)
         {
             hole.SetHoleSize(0);
             isFull = true;
             navigator.SetIsFull(isFull);
         }
+        
+        SetUI();
        
     }
     
-    public void ResetAmmoCount()
+    public void ResetAmmoCount(bool isBomb)
     {
+        if (isBomb)
+        {
+            currentAmmo = currentAmmo - bombsCollected;
+            bombsCollected = 0;
+        }
+        else
+        {
+            currentAmmo = currentAmmo - ammosCollected;
+            ammosCollected = 0;
+        }
        
-        currentAmmo = 0;
         tmp.SetText(currentAmmo + "/" + ammoMax);
         hole.SetHoleSize(1.5f);
         isFull = false;
         navigator.SetIsFull(false);
+
+        SetUI();
       
        
+    }
+
+    public void SetUI()
+    {
+        tmp.SetText(currentAmmo + "/" + ammoMax);
+        bombIcon.SetActive(bombsCollected > 0);
+        bombIcon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(bombsCollected.ToString());
+
+        ammoIcon.SetActive(ammosCollected > 0);
+        ammoIcon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(ammosCollected.ToString());
     }
 
     public int GetCurrentAmmo()

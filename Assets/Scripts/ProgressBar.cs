@@ -10,6 +10,9 @@ public class ProgressBar : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     [SerializeField] private TuretTargeting turret;
     private bool on;
+
+    [SerializeField]
+    private bool isBomb;
     [SerializeField] private SpriteRenderer[] sprites;
     private destroyCubes d;
     [SerializeField] private FillObject fillObject;
@@ -29,7 +32,7 @@ public class ProgressBar : MonoBehaviour
                 turret.SetIsFireStarted(true);
                 on = false;
                 SetSprites(false);
-                d.ResetAmmoCount();
+                d.ResetAmmoCount(isBomb);
                 
             }
         
