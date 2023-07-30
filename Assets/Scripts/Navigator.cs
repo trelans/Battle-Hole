@@ -70,7 +70,7 @@ public class Navigator : MonoBehaviour
                 // navigator.x = Mathf.Clamp(navigator.x, -5f, 5f);
                 // navigator.z = Mathf.Clamp(navigator.z, -5f, 5f);
 
-                navigator = Vector3.ClampMagnitude(navigator, 30f);
+                navigator = Vector3.ClampMagnitude(navigator, 35f);
 
                 // Instead of using Lerp, use MoveTowards to achieve constant speed movement
                 transform.position = Vector3.MoveTowards(transform.position, navigator, Time.deltaTime * moveSpeed);

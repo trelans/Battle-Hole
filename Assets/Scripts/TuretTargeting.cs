@@ -122,7 +122,7 @@ public class TuretTargeting : MonoBehaviour
                 // Remove the ammo from the queue (you may need to handle ammo depletion in a more sophisticated way)
                 Destroy(ammoToShoot.gameObject);
                 ammoCount--;
-                Debug.Log(ammoCount/maxAmmo);
+                
                 if(maxAmmo != 0 )
                     progressBar.FillBarUpdate((float) ammoCount/maxAmmo);
             }
@@ -143,11 +143,7 @@ public class TuretTargeting : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(enemyTag))
-        {
-            target = other.transform;
-        }
-        
+    
         if (other.CompareTag("Player"))
         {
             if (!isFireStarted && cubes.GetCurrentAmmo(progressBar.isBomb) > 0)
@@ -158,6 +154,14 @@ public class TuretTargeting : MonoBehaviour
             
         }
 
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag(enemyTag))
+        {
+            target = other.transform;
+        }
     }
 
     void OnTriggerExit(Collider other)

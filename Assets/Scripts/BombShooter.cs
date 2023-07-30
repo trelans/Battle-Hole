@@ -20,7 +20,7 @@ public class BombShooter : MonoBehaviour
     private float inverse = -1;
 
     private float timeAfterLanding = 0;
-    private float enemySideCooldown = 2;
+    private float enemySideCooldown = 6;
 
     private int explosionTime = 30;
 
@@ -32,7 +32,7 @@ public class BombShooter : MonoBehaviour
 
     [SerializeField] private TextMeshPro bombText;
 
-    private GameObject particle;
+    [SerializeField] private GameObject particle;
     [SerializeField] private GameObject explosions;
     
     // Start is called before the first frame update
@@ -95,7 +95,7 @@ public class BombShooter : MonoBehaviour
 
     }
 
-
+// Bana doğru gelen
     private void Shoot()
     {
             Vector3 direction = Vector3.up + Vector3.forward;
@@ -117,6 +117,8 @@ public class BombShooter : MonoBehaviour
 
     private void Explode()
     {
+        particle.transform.SetParent(explosions.transform);
+        particle.SetActive(true); 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2);
         if (!gameObject.activeSelf || IsOnPlayerSide())
         {
@@ -131,8 +133,7 @@ public class BombShooter : MonoBehaviour
                 hitCollider.gameObject.GetComponent<Enemy>().DieEnemy(false);
             }
         }
-        particle.transform.SetParent(explosions.transform);
-        particle.SetActive(true); 
+    
         gameObject.SetActive(false);
        
     }
