@@ -12,7 +12,7 @@ public class BombShooter : MonoBehaviour
 
     private float inverse = -1;
 
-    private float timeAfterShoot = 0;
+    private float timeAfterLanding = 0;
     private float enemySideCooldown = 2;
 
     private float explosionTime = 6;
@@ -29,6 +29,26 @@ public class BombShooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        explosionTime -= Time.deltaTime;
+
+
+        if (IsOnGround())
+        {
+            if (explosionTime <= 0)
+            {
+                Explode();
+            }
+            else
+            {
+
+            }
+        }
+        if (explosionTime <= 0 && IsOnGround())
+        {
+            Explode();
+        }
+
+
     }
 
     private void Shoot()
@@ -53,6 +73,7 @@ public class BombShooter : MonoBehaviour
     private bool Explode()
     {
         gameObject.SetActive(false);
+        return false;
     }
 
 
