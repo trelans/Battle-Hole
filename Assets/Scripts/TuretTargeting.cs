@@ -38,6 +38,7 @@ public class TuretTargeting : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(turretHead.rotation.eulerAngles);
         if (target != null)
         {
             Vector3 targetDirection = target.position - turretHead.position;
