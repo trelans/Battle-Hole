@@ -16,7 +16,7 @@ public class GameHandler : MonoBehaviour
     private int levelIndex;
     private void Start()
     {
-        
+        Time.timeScale = 1;
         levelNo = PlayerPrefs.GetInt("level", 1);
         levelIndex = PlayerPrefs.GetInt("levelIndex", 0);
         level.transform.GetChild(levelIndex).gameObject.SetActive(true);
